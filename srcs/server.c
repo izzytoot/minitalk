@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:22 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 16:22:49 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:09:43 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 1)
 	{	
-		ft_printf("Error. Run with: ./server \n");
+		ft_putstr_fd(RED"Error. Run with: ./server \n"RESET, 2);
 		return (1);
 	}
 	pid = getpid();
-	ft_printf("Process ID(PID): %d\n", pid);
+	ft_printf(YELLOW"Process ID(PID): %d\n"RESET, pid);
 	while (1)
 	{
 		signal(SIGUSR1, signal_handler);

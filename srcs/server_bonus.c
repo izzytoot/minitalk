@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:22 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 15:38:44 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:09:27 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 	static int	bit_pos;
 	static int	i;
 	
+	(void)info;
 	(void)context;
 	if(signal == SIGUSR1)
 		i |= (0x01 << bit_pos);
@@ -38,14 +39,14 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 1)
 	{	
-		ft_printf("Error. Run with: ./server \n");
+		ft_putstr_fd(RED"Error. Run with: ./server \n"RESET, 2);
 		return (1);
 	}
 	pid = getpid();
-	ft_printf("Process ID(PID): %d\n", pid);
+	ft_printf(YELLOW"Process ID(PID): %d\n"RESET, pid);
 	sig.sa_sigaction = signal_handler;
 	sigemptyset(&sig.sa_mask);
-	sig.sa_flags = SA_SIGINFO;
+	sig.sa_flags = 0;
 	while (1)
 	{
 		sigaction(SIGUSR1, &sig, NULL);

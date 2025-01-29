@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 16:17:28 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:04:26 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 	
 	if(ac != 3) // program, pid, message
 	{	
-		ft_printf("Error. Run with: ./client <PID> <message string> \n");	
+		ft_putstr_fd(RED"Error. Run with: ./client <PID> <message string>\n"RESET, 2);
 		return (1);
 	}
 	else

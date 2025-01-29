@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:17:38 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 14:34:26 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:58:08 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "libft/libft.h"
 # include <signal.h>
 
-void	send_bits_to_server(int pid, char letter);
-void	signal_handler(int signal);
+# define RED		"\033[0;31m"
+# define GREEN		"\033[0;32m"  
+# define YELLOW		"\033[0;33m" 
+# define RESET		"\033[0m"
 
 #endif

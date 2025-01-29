@@ -6,15 +6,15 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 15:52:27 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:04:20 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk_bonus.h"
 
-static void	sig_confirm(int sig) 
+static void	sig_confirm(int signal)
 {
-	if (sig == SIGUSR1)
+	if (signal == SIGUSR1)
 		ft_printf("Message received\n");
 	else
 		ft_printf("Message received\n"); 
@@ -40,22 +40,24 @@ int	main(int ac, char **av)
 {
 	pid_t	pid;
 	char	*message;
+	int	i;
 	
 	if(ac != 3) // program, pid, message
 	{	
-		ft_printf("Error. Run with: ./client <PID> <message string> \n");	
+		ft_putstr_fd(RED"Error. Run with: ./client <PID> <message string>\n"RESET, 2);
 		return (1);
 	}
 	else
 	{
 		pid = ft_atoi(av[1]);
 		message = av[2];
-		while (*message)
+		i = 0;
+		while (message[i])
 		{
 			signal(SIGUSR1, sig_confirm);
 			signal(SIGUSR2, sig_confirm);
 			send_bits_to_server(pid, *message);
-			message++;
+			i++;
 		}
 		send_bits_to_server(pid, '\n');
 	}
