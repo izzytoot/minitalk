@@ -6,12 +6,12 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:17:38 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 16:58:05 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:04:11 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 
 # include "libft/libft.h"
 # include <signal.h>

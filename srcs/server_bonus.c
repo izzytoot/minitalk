@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:22 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 17:09:27 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:09:01 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	static int	bit_pos;
 	static int	i;
-	
+
 	(void)info;
 	(void)context;
-	if(signal == SIGUSR1)
+	if (signal == SIGUSR1)
 		i |= (0x01 << bit_pos);
 	bit_pos++;
-	if(bit_pos == 8)
+	if (bit_pos == 8)
 	{
 		ft_printf("%c", i);
 		bit_pos = 0;
@@ -33,12 +33,12 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 
 int	main(int ac, char **av)
 {
-	pid_t	pid;
+	pid_t				pid;
 	struct sigaction	sig;
 
 	(void)av;
 	if (ac != 1)
-	{	
+	{
 		ft_putstr_fd(RED"Error. Run with: ./server \n"RESET, 2);
 		return (1);
 	}

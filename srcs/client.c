@@ -6,18 +6,18 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 17:04:26 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:06:45 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void send_bits_to_server(int pid, char letter)
+void	send_bits_to_server(int pid, char letter)
 {
 	int	bit_pos;
 
 	bit_pos = 0;
-	while (bit_pos < 8) // size of 1 char
+	while (bit_pos < 8)
 	{
 		if ((letter & (0x01 << bit_pos)) != 0)
 			kill(pid, SIGUSR1);
@@ -32,10 +32,11 @@ int	main(int ac, char **av)
 {
 	pid_t	pid;
 	char	*message;
-	
-	if(ac != 3) // program, pid, message
-	{	
-		ft_putstr_fd(RED"Error. Run with: ./client <PID> <message string>\n"RESET, 2);
+
+	if (ac != 3)
+	{
+		ft_putstr_fd(RED"Error.\n"RESET, 2);
+		ft_putstr_fd(RED "Run with: ./client <PID> <message string>\n"RESET, 2);
 		return (1);
 	}
 	else
