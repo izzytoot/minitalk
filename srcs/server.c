@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:22 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 18:06:37 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:30:13 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac != 1)
 	{
-		ft_putstr_fd(RED"Error.\n"RESET, 2);
+		ft_putstr_fd(RED"Error. "RESET, 2);
 		ft_putstr_fd(RED "Run with: ./server\n"RESET, 2);
 		return (1);
 	}

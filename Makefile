@@ -6,7 +6,7 @@
 #    By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 14:15:54 by icunha-t          #+#    #+#              #
-#    Updated: 2025/01/29 15:53:06 by icunha-t         ###   ########.fr        #
+#    Updated: 2025/01/29 18:25:44 by icunha-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ fclean: clean
 	@echo $(RED) "$(NAME) and $(CLIENT_NAME) were deleted!" $(RESET)
 
 fclean_bonus: clean_bonus
-	@$(RM) $(NAME) $(CLIENT_NAME_BONUS)
+	@$(RM) $(NAME_BONUS) $(CLIENT_NAME_BONUS)
 	@echo $(RED) "$(NAME) and $(CLIENT_NAME_BONUS) were deleted!" $(RESET)
 
 fcleanall: fclean fclean_bonus

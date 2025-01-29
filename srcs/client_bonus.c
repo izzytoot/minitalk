@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 18:08:17 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:30:01 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	send_bits_to_server(int pid, char letter)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		sleep(500);
 		bit_pos++;
 	}
 }
@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		ft_putstr_fd(RED"Error.\n"RESET, 2);
+		ft_putstr_fd(RED"Error. "RESET, 2);
 		ft_putstr_fd(RED "Run with: ./client <PID> <message string>\n"RESET, 2);
 		return (1);
 	}
