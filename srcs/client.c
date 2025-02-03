@@ -6,49 +6,61 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 18:30:05 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:30:38 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	send_bits_to_server(int pid, char letter)
+void	print_error(char *error_message)
+{
+	ft_putstr_fd(error_message, 2);
+	exit (1);
+}
+
+void	bit_converter(int pid, char c)
 {
 	int	bit_pos;
 
 	bit_pos = 0;
 	while (bit_pos < 8)
 	{
-		if ((letter & (0x01 << bit_pos)) != 0)
+		if (c & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		sleep(500);
+		c >>= 1;
 		bit_pos++;
+		usleep(500);
 	}
+}
+
+void	send_bits_to_server(int pid, char *message)
+{
+	int	i;
+
+	i = 0;
+	while (message[i])
+		bit_converter(pid, message[i++]);
+	bit_converter(pid, '\0');
 }
 
 int	main(int ac, char **av)
 {
 	pid_t	pid;
-	char	*message;
+	int		null_bit;
 
 	if (ac != 3)
+		print_error(RED"Error. Run with: ./client <PID> <message>\n"RESET);
+	pid = ft_atoi(av[1]);
+	send_bits_to_server(pid, "Client: ");
+	send_bits_to_server(pid, av[2]);
+	null_bit = 0;
+	while (null_bit < 8)
 	{
-		ft_putstr_fd(RED"Error. "RESET, 2);
-		ft_putstr_fd(RED "Run with: ./client <PID> <message string>\n"RESET, 2);
-		return (1);
-	}
-	else
-	{
-		pid = ft_atoi(av[1]);
-		message = av[2];
-		while (*message)
-		{
-			send_bits_to_server(pid, *message);
-			message++;
-		}
-		send_bits_to_server(pid, '\n');
+		kill(pid, SIGUSR2);
+		usleep(300);
+		null_bit++;
 	}
 	return (0);
 }

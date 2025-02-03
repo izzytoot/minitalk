@@ -6,29 +6,63 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:22 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 18:30:09 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:28:34 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk_bonus.h"
 
+#include "../minitalk_bonus.h"
+
+void	print_error(char *error_message)
+{
+	ft_putstr_fd(error_message, 2);
+	exit (1);
+}
+
+void	char_handler(char **message, char c)
+{
+	char	temp[2];
+	char	*new_str;
+
+	temp[0] = c;
+	temp[1] = '\0';
+	if (!*message)
+		*message = ft_strdup(temp);
+	else if (c == 0)
+	{
+		ft_printf("%s\n", *message);
+		free(*message);
+		*message = NULL;
+	}
+	else
+	{
+		new_str = ft_strjoin(*message, temp);
+		free(*message);
+		*message = ft_strdup(new_str);
+		free(new_str);
+	}
+}
+
 void	signal_handler(int signal, siginfo_t *info, void *context)
 {
 	static int	bit_pos;
-	static int	i;
+	static int	c;
+	static char	*message;
 
 	(void)info;
 	(void)context;
 	if (signal == SIGUSR1)
-		i |= (0x01 << bit_pos);
+		c = c | (1 << bit_pos);
 	bit_pos++;
 	if (bit_pos == 8)
 	{
-		ft_printf("%c", i);
+		char_handler(&message, c);
 		bit_pos = 0;
-		i = 0;
-		kill(info->si_pid, SIGUSR2);
+		c = 0;
 	}
+	if (signal == SIGUSR1 || signal == SIGUSR2)
+		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(int ac, char **av)
@@ -38,12 +72,10 @@ int	main(int ac, char **av)
 
 	(void)av;
 	if (ac != 1)
-	{
-		ft_putstr_fd(RED"Error. "RESET, 2);
-		ft_putstr_fd(RED "Run with: ./server\n"RESET, 2);
-		return (1);
-	}
+		print_error(RED"Error. Run with: ./server\n"RESET);
 	pid = getpid();
+	if (pid == -1)
+		print_error(RED"Invalid PID.\n"RESET);
 	ft_printf(YELLOW"Process ID(PID): %d\n"RESET, pid);
 	sig.sa_sigaction = signal_handler;
 	sigemptyset(&sig.sa_mask);

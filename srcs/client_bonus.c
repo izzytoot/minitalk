@@ -6,61 +6,69 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:29 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/29 18:30:01 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:27:33 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk_bonus.h"
 
-static void	sig_confirm(int signal)
+void	print_error(char *error_message)
 {
-	if (signal == SIGUSR1)
-		ft_printf("Message received\n");
-	else
-		ft_printf("Message received\n");
+	ft_putstr_fd(error_message, 2);
+	exit (1);
 }
 
-void	send_bits_to_server(int pid, char letter)
+static void	sig_confirm(int signal)
+{
+	if (signal == SIGUSR1 || signal == SIGUSR2)
+		ft_printf(YELLOW"Message received\n"RESET);
+}
+
+void	bit_converter(int pid, char c)
 {
 	int	bit_pos;
 
 	bit_pos = 0;
 	while (bit_pos < 8)
 	{
-		if ((letter & (0x01 << bit_pos)) != 0)
+		if (c & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		sleep(500);
+		pause();
+		c >>= 1;
 		bit_pos++;
 	}
+}
+
+void	send_bits_to_server(int pid, char *message)
+{
+	int	i;
+
+	i = 0;
+	while (message[i])
+		bit_converter(pid, message[i++]);
+	bit_converter(pid, '\0');
 }
 
 int	main(int ac, char **av)
 {
 	pid_t	pid;
-	char	*message;
-	int		i;
+	int		null_bit;
 
 	if (ac != 3)
+		print_error(RED"Error. Run with: ./client <PID> <message>\n"RESET);
+	pid = ft_atoi(av[1]);
+	signal(SIGUSR1, sig_confirm);
+	signal(SIGUSR2, sig_confirm);
+	send_bits_to_server(pid, "Client: ");
+	send_bits_to_server(pid, av[2]);
+	null_bit = 0;
+	while (null_bit < 8)
 	{
-		ft_putstr_fd(RED"Error. "RESET, 2);
-		ft_putstr_fd(RED "Run with: ./client <PID> <message string>\n"RESET, 2);
-		return (1);
-	}
-	else
-	{
-		pid = ft_atoi(av[1]);
-		message = av[2];
-		i = 0;
-		while (message[i])
-		{
-			signal(SIGUSR1, sig_confirm);
-			signal(SIGUSR2, sig_confirm);
-			send_bits_to_server(pid, *message);
-			i++;
-		}
-		send_bits_to_server(pid, '\n');
+		kill(pid, SIGUSR2);
+		usleep(100);
+		null_bit++;
 	}
 	return (0);
 }

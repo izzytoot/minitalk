@@ -1,7 +1,7 @@
 # 💬 Minitalk
 
 ## 1. About the project
-The purpose of this project is to code a small data exchange program between server and client using UNIX signals.
+The purpose of this project is to code a small data exchange program between server and client using UNIX signals (SIGUSR1 and SIGUSR2). It allows a client to send messages to a server, which processes and displays them in the terminal.
 
 For more information check the subject: [**subject of minitalk**](https://github.com/izzytoot/minitalk/blob/main/en.subject.pdf).
 

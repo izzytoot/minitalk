@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:37:52 by icunha-t          #+#    #+#             */
-/*   Updated: 2025/01/28 14:28:45 by icunha-t         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:51:07 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <unistd.h>
 # include "printf/ft_printf.h"
 # include "gnl/get_next_line.h"
+
+# define RED		"\033[0;31m" 
+# define RESET		"\033[0m"
 
 int		ft_atoi(const char *nptr);
 int		ft_isalnum(int c);
